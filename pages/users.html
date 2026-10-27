@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Usuários | CommerceHub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/users.css">
+
+    <script src="../js/main.js" defer></script>
+    <script src="../js/users.js" defer></script>
+</head>
+
+<body>
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="../index.html" class="logo">
+            <span class="logo-icon">C</span>
+            <span>Commerce<span>Hub</span></span>
+        </a>
+
+        <p class="menu-label">MENU PRINCIPAL</p>
+
+        <nav class="nav-menu" aria-label="Navegação principal">
+
+            <a href="../index.html" class="nav-link">
+                <span class="nav-icon">▦</span>
+                <span>Visão geral</span>
+            </a>
+
+            <a href="users.html" class="nav-link active" aria-current="page">
+                <span class="nav-icon">♙</span>
+                <span>Usuários</span>
+            </a>
+
+            <a href="products.html" class="nav-link">
+                <span class="nav-icon">◈</span>
+                <span>Produtos</span>
+            </a>
+
+            <a href="orders.html" class="nav-link">
+                <span class="nav-icon">▤</span>
+                <span>Pedidos</span>
+            </a>
+
+            <a href="categories.html" class="nav-link">
+                <span class="nav-icon">▧</span>
+                <span>Categorias</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="project-icon">C</div>
+            <div>
+                <strong>CommerceHub</strong>
+                <small>Painel de gestão</small>
+            </div>
+        </div>
+    </aside>
+
+    <div class="page-wrapper">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Abrir menu"
+                    aria-controls="sidebar"
+                    aria-expanded="false"
+                >
+                    ☰
+                </button>
+
+                <span class="breadcrumb">
+                    Gestão <span>/</span> Usuários
+                </span>
+            </div>
+
+            <div class="topbar-right">
+                <span class="environment-label">Painel administrativo</span>
+                <div class="avatar" aria-label="Perfil administrativo">AD</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <!-- CABEÇALHO DA PÁGINA -->
+            <section class="users-heading">
+                <div>
+                    <span class="eyebrow">GESTÃO DE PESSOAS</span>
+                    <h1>Usuários</h1>
+                    <p>
+                        Organize os cadastros e gerencie as informações
+                        dos usuários da sua loja.
+                    </p>
+                </div>
+
+                <button type="button" class="create-btn" id="createUserButton">
+                    <span aria-hidden="true">+</span>
+                    Adicionar usuário
+                </button>
+            </section>
+
+            <!-- INDICADORES -->
+            <section class="users-stats" aria-label="Resumo de usuários">
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Usuários cadastrados</span>
+                        <span class="stat-icon purple">♙</span>
+                    </div>
+
+                    <strong class="stat-value" id="totalUsers">—</strong>
+                    <span class="stat-description">Total de cadastros</span>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Resultados encontrados</span>
+                        <span class="stat-icon blue">⌕</span>
+                    </div>
+
+                    <strong class="stat-value" id="filteredUsers">—</strong>
+                    <span class="stat-description">Conforme sua pesquisa</span>
+                </article>
+
+            </section>
+
+            <!-- TABELA -->
+            <section class="users-panel">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="panel-eyebrow">CADASTROS</span>
+                        <h2>Todos os usuários</h2>
+                        <p>Consulte e mantenha os dados atualizados.</p>
+                    </div>
+
+                    <button type="button" class="refresh-btn" id="refreshUsers">
+                        <span aria-hidden="true">↻</span>
+                        Atualizar
+                    </button>
+                </div>
+
+                <div class="panel-toolbar">
+                    <label class="search-field">
+                        <span aria-hidden="true">⌕</span>
+
+                        <input
+                            type="search"
+                            id="searchUsers"
+                            placeholder="Pesquisar por nome, e-mail ou ID..."
+                            aria-label="Pesquisar usuários"
+                            autocomplete="off"
+                        >
+                    </label>
+
+                    <span class="result-counter" id="resultCounter">
+                        Carregando...
+                    </span>
+                </div>
+
+                <p
+                    class="users-message"
+                    id="usersMessage"
+                    role="status"
+                    aria-live="polite"
+                >
+                    Carregando usuários...
+                </p>
+
+                <div class="table-scroll" id="tableContainer" hidden>
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">USUÁRIO</th>
+                                <th scope="col">E-MAIL</th>
+                                <th scope="col">TELEFONE</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">AÇÕES</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="panel-bottom">
+                    <span id="paginationInfo">Nenhum registro exibido</span>
+                    <span>Gerenciamento de usuários</span>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 CommerceHub</span>
+                <span>Gestão simplificada para seu negócio</span>
+            </footer>
+
+        </main>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- MODAL: DETALHES -->
+<div class="modal-backdrop" id="userModal" hidden>
+    <section
+        class="user-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+    >
+        <div class="modal-header">
+            <div>
+                <span class="panel-eyebrow">INFORMAÇÕES</span>
+                <h2 id="modalTitle">Perfil do usuário</h2>
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeModal"
+                aria-label="Fechar"
+            >×</button>
+        </div>
+
+        <div class="modal-profile">
+            <div class="modal-avatar" id="modalAvatar">U</div>
+
+            <div>
+                <h3 id="modalName">—</h3>
+                <p id="modalEmail">—</p>
+            </div>
+        </div>
+
+        <dl class="modal-details">
+            <div>
+                <dt>Código do usuário</dt>
+                <dd id="modalId">—</dd>
+            </div>
+
+            <div>
+                <dt>Telefone</dt>
+                <dd id="modalPhone">—</dd>
+            </div>
+        </dl>
+
+        <button type="button" class="modal-done" id="doneModal">
+            Fechar
+        </button>
+    </section>
+</div>
+
+<!-- MODAL: CADASTRO / EDIÇÃO -->
+<div class="modal-backdrop" id="userFormModal" hidden>
+    <section
+        class="user-modal form-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="userFormTitle"
+    >
+        <div class="modal-header">
+            <div>
+                <span class="panel-eyebrow">CADASTRO</span>
+                <h2 id="userFormTitle">Novo usuário</h2>
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeUserForm"
+                aria-label="Fechar formulário"
+            >×</button>
+        </div>
+
+        <p class="form-description">
+            Preencha as informações do usuário.
+        </p>
+
+        <form id="userForm">
+            <input type="hidden" id="userId">
+
+            <div class="form-field">
+                <label for="userName">Nome completo</label>
+                <input
+                    type="text"
+                    id="userName"
+                    placeholder="Nome e sobrenome"
+                    autocomplete="name"
+                    maxlength="120"
+                    required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="userEmail">E-mail</label>
+                <input
+                    type="email"
+                    id="userEmail"
+                    placeholder="usuario@exemplo.com"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="userPhone">Telefone</label>
+                <input
+                    type="tel"
+                    id="userPhone"
+                    placeholder="(11) 99999-9999"
+                    autocomplete="tel"
+                    required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="userPassword" id="passwordLabel">Senha</label>
+
+                <input
+                    type="password"
+                    id="userPassword"
+                    placeholder="Mínimo de 8 caracteres"
+                    minlength="8"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <small id="passwordHelp">
+                    Escolha uma senha segura.
+                </small>
+            </div>
+
+            <p class="form-error" id="userFormError" role="alert" hidden></p>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-btn" id="cancelUserForm">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="save-btn" id="saveUserButton">
+                    Cadastrar usuário
+                </button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<!-- MODAL: EXCLUSÃO -->
+<div class="modal-backdrop" id="deleteUserModal" hidden>
+    <section
+        class="user-modal delete-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="deleteUserTitle"
+    >
+        <div class="delete-icon" aria-hidden="true">!</div>
+
+        <h2 id="deleteUserTitle">Excluir usuário?</h2>
+
+        <p>
+            Tem certeza de que deseja excluir
+            <strong id="deleteUserName"></strong>?
+            Esta ação não poderá ser desfeita.
+        </p>
+
+        <p class="form-error" id="deleteUserError" role="alert" hidden></p>
+
+        <div class="form-actions">
+            <button type="button" class="cancel-btn" id="cancelDeleteUser">
+                Cancelar
+            </button>
+
+            <button type="button" class="delete-confirm-btn" id="confirmDeleteUser">
+                Excluir usuário
+            </button>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

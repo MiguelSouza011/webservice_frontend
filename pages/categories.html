@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Categorias | CommerceHub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/categories.css">
+
+    <script src="../js/main.js" defer></script>
+    <script src="../js/categories.js" defer></script>
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="../index.html" class="logo">
+            <span class="logo-icon">C</span>
+            <span>Commerce<span>Hub</span></span>
+        </a>
+
+        <p class="menu-label">MENU PRINCIPAL</p>
+
+        <nav class="nav-menu" aria-label="Navegação principal">
+
+            <a href="../index.html" class="nav-link">
+                <span class="nav-icon">▦</span>
+                <span>Visão geral</span>
+            </a>
+
+            <a href="users.html" class="nav-link">
+                <span class="nav-icon">♙</span>
+                <span>Usuários</span>
+            </a>
+
+            <a href="products.html" class="nav-link">
+                <span class="nav-icon">◈</span>
+                <span>Produtos</span>
+            </a>
+
+            <a href="orders.html" class="nav-link">
+                <span class="nav-icon">▤</span>
+                <span>Pedidos</span>
+            </a>
+
+            <a href="categories.html" class="nav-link active" aria-current="page">
+                <span class="nav-icon">▧</span>
+                <span>Categorias</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="project-icon">C</div>
+            <div>
+                <strong>CommerceHub</strong>
+                <small>Painel de gestão</small>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="page-wrapper">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Abrir menu"
+                    aria-controls="sidebar"
+                    aria-expanded="false"
+                >☰</button>
+
+                <span class="breadcrumb">
+                    Gestão <span>/</span> Categorias
+                </span>
+            </div>
+
+            <div class="topbar-right">
+                <span class="environment-label">Painel administrativo</span>
+                <div class="avatar" aria-label="Perfil administrativo">AD</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <!-- TÍTULO -->
+            <section class="categories-heading">
+                <div>
+                    <span class="eyebrow">ORGANIZAÇÃO DO CATÁLOGO</span>
+                    <h1>Categorias</h1>
+                    <p>
+                        Explore as categorias dos produtos e mantenha
+                        seu catálogo organizado.
+                    </p>
+                </div>
+
+                <button type="button" class="categories-refresh-btn" id="refreshCategories">
+                    <span aria-hidden="true">↻</span>
+                    Atualizar
+                </button>
+            </section>
+
+            <!-- INDICADORES -->
+            <section class="categories-stats" aria-label="Resumo de categorias">
+
+                <article class="category-stat-card">
+                    <div class="category-stat-top">
+                        <span>Categorias cadastradas</span>
+                        <span class="category-stat-icon purple">▧</span>
+                    </div>
+
+                    <strong class="category-stat-value" id="totalCategories">—</strong>
+                    <span class="category-stat-description">Total de categorias</span>
+                </article>
+
+                <article class="category-stat-card">
+                    <div class="category-stat-top">
+                        <span>Resultados encontrados</span>
+                        <span class="category-stat-icon blue">⌕</span>
+                    </div>
+
+                    <strong class="category-stat-value" id="filteredCategories">—</strong>
+                    <span class="category-stat-description">Conforme sua pesquisa</span>
+                </article>
+
+                <article class="category-stat-card">
+                    <div class="category-stat-top">
+                        <span>Produtos associados</span>
+                        <span class="category-stat-icon green">◈</span>
+                    </div>
+
+                    <strong class="category-stat-value" id="associatedProducts">—</strong>
+                    <span class="category-stat-description">Produtos vinculados às categorias</span>
+                </article>
+
+            </section>
+
+            <!-- LISTAGEM -->
+            <section class="categories-panel">
+
+                <div class="categories-panel-header">
+                    <div>
+                        <span class="panel-eyebrow">CATÁLOGO</span>
+                        <h2>Todas as categorias</h2>
+                        <p>Consulte os grupos que organizam seus produtos.</p>
+                    </div>
+
+                    <span class="categories-count" id="categoriesCount">
+                        — categorias
+                    </span>
+                </div>
+
+                <div class="categories-toolbar">
+                    <label class="categories-search">
+                        <span aria-hidden="true">⌕</span>
+
+                        <input
+                            type="search"
+                            id="searchCategories"
+                            placeholder="Pesquisar por nome ou ID..."
+                            aria-label="Pesquisar categorias"
+                            autocomplete="off"
+                        >
+                    </label>
+                </div>
+
+                <p
+                    class="categories-message"
+                    id="categoriesMessage"
+                    role="status"
+                    aria-live="polite"
+                >
+                    Carregando categorias...
+                </p>
+
+                <div class="categories-table-scroll" id="categoriesTableContainer" hidden>
+                    <table class="categories-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">CATEGORIA</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">PRODUTOS</th>
+                                <th scope="col">AÇÕES</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="categoriesTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="categories-panel-bottom">
+                    <span id="categoriesPaginationInfo">Nenhuma categoria exibida</span>
+                    <span>Organização de produtos</span>
+                </div>
+
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 CommerceHub</span>
+                <span>Gestão simplificada para seu negócio</span>
+            </footer>
+
+        </main>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- MODAL: DETALHES -->
+<div class="category-modal-backdrop" id="categoryDetailsModal" hidden>
+    <section
+        class="category-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="categoryModalTitle"
+    >
+
+        <div class="category-modal-header">
+            <div>
+                <span class="panel-eyebrow">INFORMAÇÕES</span>
+                <h2 id="categoryModalTitle">Detalhes da categoria</h2>
+            </div>
+
+            <button
+                type="button"
+                class="category-modal-close"
+                id="closeCategoryDetails"
+                aria-label="Fechar detalhes"
+            >×</button>
+        </div>
+
+        <div class="category-detail-banner">
+            <div class="category-detail-icon">▧</div>
+            <div>
+                <h3 id="categoryDetailName">—</h3>
+                <p>Categoria de produtos</p>
+            </div>
+        </div>
+
+        <div class="category-detail-grid">
+            <div>
+                <span>Identificador</span>
+                <strong id="categoryDetailId">—</strong>
+            </div>
+
+            <div>
+                <span>Produtos vinculados</span>
+                <strong id="categoryDetailProductsCount">—</strong>
+            </div>
+        </div>
+
+        <div class="category-products-section">
+            <h3>Produtos da categoria</h3>
+            <div class="category-products-list" id="categoryProductsList"></div>
+        </div>
+
+        <button type="button" class="category-primary-btn" id="doneCategoryDetails">
+            Fechar detalhes
+        </button>
+
+    </section>
+</div>
+
+</body>
+</html>

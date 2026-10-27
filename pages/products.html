@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | CommerceHub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/products.css">
+
+    <script src="../js/main.js" defer></script>
+    <script src="../js/products.js" defer></script>
+</head>
+<body>
+
+<div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <a href="../index.html" class="logo">
+            <span class="logo-icon">C</span>
+            <span>Commerce<span>Hub</span></span>
+        </a>
+
+        <p class="menu-label">MENU PRINCIPAL</p>
+
+        <nav class="nav-menu" aria-label="Navegação principal">
+            <a href="../index.html" class="nav-link">
+                <span class="nav-icon">▦</span>
+                <span>Visão geral</span>
+            </a>
+
+            <a href="users.html" class="nav-link">
+                <span class="nav-icon">♙</span>
+                <span>Usuários</span>
+            </a>
+
+            <a href="products.html" class="nav-link active" aria-current="page">
+                <span class="nav-icon">◈</span>
+                <span>Produtos</span>
+            </a>
+
+            <a href="orders.html" class="nav-link">
+                <span class="nav-icon">▤</span>
+                <span>Pedidos</span>
+            </a>
+
+            <a href="categories.html" class="nav-link">
+                <span class="nav-icon">▧</span>
+                <span>Categorias</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="project-icon">C</div>
+            <div>
+                <strong>CommerceHub</strong>
+                <small>Painel de gestão</small>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="page-wrapper">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Abrir menu"
+                    aria-controls="sidebar"
+                    aria-expanded="false"
+                >☰</button>
+
+                <span class="breadcrumb">
+                    Gestão <span>/</span> Produtos
+                </span>
+            </div>
+
+            <div class="topbar-right">
+                <span class="environment-label">Painel administrativo</span>
+                <div class="avatar" aria-label="Perfil administrativo">AD</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <!-- CABEÇALHO -->
+            <section class="products-heading">
+                <div>
+                    <span class="eyebrow">CATÁLOGO DE PRODUTOS</span>
+                    <h1>Produtos</h1>
+                    <p>
+                        Organize seu catálogo, atualize preços e mantenha
+                        as informações dos produtos em dia.
+                    </p>
+                </div>
+
+                <button type="button" class="create-btn" id="createProductButton">
+                    <span aria-hidden="true">+</span>
+                    Adicionar produto
+                </button>
+            </section>
+
+            <!-- RESUMO -->
+            <section class="products-stats" aria-label="Resumo do catálogo">
+                <article class="product-stat-card">
+                    <div class="product-stat-top">
+                        <span>Produtos cadastrados</span>
+                        <span class="product-stat-icon purple">◈</span>
+                    </div>
+                    <strong id="totalProducts" class="product-stat-value">—</strong>
+                    <span class="product-stat-description">Itens no catálogo</span>
+                </article>
+
+                <article class="product-stat-card">
+                    <div class="product-stat-top">
+                        <span>Resultados encontrados</span>
+                        <span class="product-stat-icon blue">⌕</span>
+                    </div>
+                    <strong id="filteredProducts" class="product-stat-value">—</strong>
+                    <span class="product-stat-description">Conforme sua pesquisa</span>
+                </article>
+
+                <article class="product-stat-card">
+                    <div class="product-stat-top">
+                        <span>Preço médio</span>
+                        <span class="product-stat-icon green">R$</span>
+                    </div>
+                    <strong id="averagePrice" class="product-stat-value price-value">—</strong>
+                    <span class="product-stat-description">Média dos produtos cadastrados</span>
+                </article>
+            </section>
+
+            <!-- LISTA -->
+            <section class="products-panel">
+                <div class="products-panel-header">
+                    <div>
+                        <span class="panel-eyebrow">CATÁLOGO</span>
+                        <h2>Todos os produtos</h2>
+                        <p>Consulte, edite e gerencie seus produtos.</p>
+                    </div>
+
+                    <button type="button" class="refresh-btn" id="refreshProducts">
+                        <span aria-hidden="true">↻</span>
+                        Atualizar
+                    </button>
+                </div>
+
+                <div class="products-toolbar">
+                    <label class="product-search">
+                        <span aria-hidden="true">⌕</span>
+                        <input
+                            type="search"
+                            id="searchProducts"
+                            placeholder="Pesquisar por nome, descrição ou ID..."
+                            aria-label="Pesquisar produtos"
+                            autocomplete="off"
+                        >
+                    </label>
+
+                    <span id="productResultCounter" class="result-counter">
+                        Carregando...
+                    </span>
+                </div>
+
+                <p
+                    class="products-message"
+                    id="productsMessage"
+                    role="status"
+                    aria-live="polite"
+                >Carregando produtos...</p>
+
+                <div class="products-table-scroll" id="productsTableContainer" hidden>
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">PRODUTO</th>
+                                <th scope="col">DESCRIÇÃO</th>
+                                <th scope="col">PREÇO</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="products-panel-bottom">
+                    <span id="productsPaginationInfo">Nenhum produto exibido</span>
+                    <span>Gerenciamento de produtos</span>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 CommerceHub</span>
+                <span>Gestão simplificada para seu negócio</span>
+            </footer>
+        </main>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- DETALHES -->
+<div class="product-modal-backdrop" id="productDetailsModal" hidden>
+    <section class="product-modal" role="dialog" aria-modal="true"
+             aria-labelledby="productDetailsTitle">
+
+        <div class="product-modal-header">
+            <div>
+                <span class="panel-eyebrow">INFORMAÇÕES</span>
+                <h2 id="productDetailsTitle">Detalhes do produto</h2>
+            </div>
+            <button type="button" class="product-modal-close"
+                    id="closeProductDetails" aria-label="Fechar">×</button>
+        </div>
+
+        <div class="product-detail-preview">
+            <div class="product-detail-image" id="detailImageContainer"></div>
+            <div>
+                <h3 id="detailProductName">—</h3>
+                <p id="detailProductPrice">—</p>
+            </div>
+        </div>
+
+        <dl class="product-detail-list">
+            <div>
+                <dt>Código do produto</dt>
+                <dd id="detailProductId">—</dd>
+            </div>
+            <div>
+                <dt>Descrição</dt>
+                <dd id="detailProductDescription">—</dd>
+            </div>
+            <div>
+                <dt>Endereço da imagem</dt>
+                <dd id="detailProductImageUrl">—</dd>
+            </div>
+        </dl>
+
+        <button type="button" class="product-primary-btn full-width"
+                id="doneProductDetails">Fechar</button>
+    </section>
+</div>
+
+<!-- CADASTRO / EDIÇÃO -->
+<div class="product-modal-backdrop" id="productFormModal" hidden>
+    <section class="product-modal product-form-modal" role="dialog"
+             aria-modal="true" aria-labelledby="productFormTitle">
+
+        <div class="product-modal-header">
+            <div>
+                <span class="panel-eyebrow">CATÁLOGO</span>
+                <h2 id="productFormTitle">Novo produto</h2>
+            </div>
+            <button type="button" class="product-modal-close"
+                    id="closeProductForm" aria-label="Fechar formulário">×</button>
+        </div>
+
+        <p class="product-form-description">
+            Preencha as informações do produto.
+        </p>
+
+        <form id="productForm">
+            <div class="product-form-field">
+                <label for="productName">Nome do produto</label>
+                <input type="text" id="productName"
+                       placeholder="Ex.: Notebook" maxlength="120" required>
+            </div>
+
+            <div class="product-form-field">
+                <label for="productDescription">Descrição</label>
+                <textarea id="productDescription" rows="4"
+                          placeholder="Descreva as principais características..."
+                          required></textarea>
+            </div>
+
+            <div class="product-form-field">
+                <label for="productPrice">Preço (R$)</label>
+                <input type="number" id="productPrice"
+                       min="0" step="0.01"
+                       placeholder="0,00" required>
+            </div>
+
+            <div class="product-form-field">
+                <label for="productImageUrl">URL da imagem</label>
+                <input type="url" id="productImageUrl"
+                       placeholder="https://exemplo.com/produto.jpg">
+                <small>Informe o endereço de uma imagem do produto.</small>
+            </div>
+
+            <p class="product-form-error" id="productFormError"
+               role="alert" hidden></p>
+
+            <div class="product-form-actions">
+                <button type="button" class="product-cancel-btn"
+                        id="cancelProductForm">Cancelar</button>
+
+                <button type="submit" class="product-primary-btn"
+                        id="saveProductButton">Cadastrar produto</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<!-- EXCLUSÃO -->
+<div class="product-modal-backdrop" id="deleteProductModal" hidden>
+    <section class="product-modal product-delete-modal" role="dialog"
+             aria-modal="true" aria-labelledby="deleteProductTitle">
+
+        <div class="product-delete-icon" aria-hidden="true">!</div>
+        <h2 id="deleteProductTitle">Excluir produto?</h2>
+
+        <p>
+            Tem certeza de que deseja excluir
+            <strong id="deleteProductName"></strong>?
+            Esta ação não poderá ser desfeita.
+        </p>
+
+        <p class="product-form-error" id="deleteProductError"
+           role="alert" hidden></p>
+
+        <div class="product-form-actions">
+            <button type="button" class="product-cancel-btn"
+                    id="cancelDeleteProduct">Cancelar</button>
+
+            <button type="button" class="product-delete-confirm"
+                    id="confirmDeleteProduct">Excluir produto</button>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos | CommerceHub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/orders.css">
+
+    <script src="../js/main.js" defer></script>
+    <script src="../js/orders.js" defer></script>
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar" id="sidebar">
+        <a href="../index.html" class="logo">
+            <span class="logo-icon">C</span>
+            <span>Commerce<span>Hub</span></span>
+        </a>
+
+        <p class="menu-label">MENU PRINCIPAL</p>
+
+        <nav class="nav-menu" aria-label="Navegação principal">
+            <a href="../index.html" class="nav-link">
+                <span class="nav-icon">▦</span>
+                <span>Visão geral</span>
+            </a>
+            <a href="users.html" class="nav-link">
+                <span class="nav-icon">♙</span>
+                <span>Usuários</span>
+            </a>
+            <a href="products.html" class="nav-link">
+                <span class="nav-icon">◈</span>
+                <span>Produtos</span>
+            </a>
+            <a href="orders.html" class="nav-link active" aria-current="page">
+                <span class="nav-icon">▤</span>
+                <span>Pedidos</span>
+            </a>
+            <a href="categories.html" class="nav-link">
+                <span class="nav-icon">▧</span>
+                <span>Categorias</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="project-icon">C</div>
+            <div>
+                <strong>CommerceHub</strong>
+                <small>Painel de gestão</small>
+            </div>
+        </div>
+    </aside>
+
+    <div class="page-wrapper">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <button type="button" class="menu-toggle" id="menuToggle"
+                        aria-label="Abrir menu" aria-expanded="false"
+                        aria-controls="sidebar">☰</button>
+
+                <span class="breadcrumb">Gestão <span>/</span> Pedidos</span>
+            </div>
+
+            <div class="topbar-right">
+                <span class="environment-label">Painel administrativo</span>
+                <div class="avatar" aria-label="Perfil administrativo">AD</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <section class="orders-heading">
+                <div>
+                    <span class="eyebrow">GESTÃO DE VENDAS</span>
+                    <h1>Pedidos</h1>
+                    <p>
+                        Acompanhe as compras dos seus clientes, consulte os detalhes
+                        e visualize o andamento de cada pedido.
+                    </p>
+                </div>
+
+                <button type="button" class="orders-refresh-btn" id="refreshOrders">
+                    <span aria-hidden="true">↻</span>
+                    Atualizar
+                </button>
+            </section>
+
+            <section class="orders-stats" aria-label="Resumo dos pedidos">
+
+                <article class="order-stat-card">
+                    <div class="order-stat-top">
+                        <span>Total de pedidos</span>
+                        <span class="order-stat-icon purple">▤</span>
+                    </div>
+                    <strong class="order-stat-value" id="totalOrders">—</strong>
+                    <span class="order-stat-description">Pedidos registrados</span>
+                </article>
+
+                <article class="order-stat-card">
+                    <div class="order-stat-top">
+                        <span>Em andamento</span>
+                        <span class="order-stat-icon orange">◷</span>
+                    </div>
+                    <strong class="order-stat-value" id="processingOrders">—</strong>
+                    <span class="order-stat-description">Aguardando conclusão</span>
+                </article>
+
+                <article class="order-stat-card">
+                    <div class="order-stat-top">
+                        <span>Entregues</span>
+                        <span class="order-stat-icon green">✓</span>
+                    </div>
+                    <strong class="order-stat-value" id="deliveredOrders">—</strong>
+                    <span class="order-stat-description">Pedidos finalizados</span>
+                </article>
+
+                <article class="order-stat-card">
+                    <div class="order-stat-top">
+                        <span>Valor dos pedidos</span>
+                        <span class="order-stat-icon blue">R$</span>
+                    </div>
+                    <strong class="order-stat-value money-value" id="totalRevenue">—</strong>
+                    <span class="order-stat-description">Soma dos valores cadastrados</span>
+                </article>
+
+            </section>
+
+            <section class="orders-panel">
+
+                <div class="orders-panel-header">
+                    <div>
+                        <span class="panel-eyebrow">HISTÓRICO DE COMPRAS</span>
+                        <h2>Todos os pedidos</h2>
+                        <p>Consulte as compras e seus respectivos status.</p>
+                    </div>
+
+                    <span class="orders-count" id="ordersCount">— pedidos</span>
+                </div>
+
+                <div class="orders-toolbar">
+                    <label class="orders-search">
+                        <span aria-hidden="true">⌕</span>
+                        <input type="search" id="searchOrders"
+                               placeholder="Pesquisar por pedido, cliente ou e-mail..."
+                               aria-label="Pesquisar pedidos" autocomplete="off">
+                    </label>
+
+                    <div class="orders-filter">
+                        <label for="statusFilter">Status</label>
+                        <select id="statusFilter">
+                            <option value="ALL">Todos os status</option>
+                            <option value="WAITING_PAYMENT">Aguardando pagamento</option>
+                            <option value="PAID">Pago</option>
+                            <option value="SHIPPED">Enviado</option>
+                            <option value="DELIVERED">Entregue</option>
+                            <option value="CANCELED">Cancelado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <p class="orders-message" id="ordersMessage"
+                   role="status" aria-live="polite">
+                    Carregando pedidos...
+                </p>
+
+                <div class="orders-table-scroll" id="ordersTableContainer" hidden>
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">PEDIDO</th>
+                                <th scope="col">CLIENTE</th>
+                                <th scope="col">DATA</th>
+                                <th scope="col">STATUS</th>
+                                <th scope="col">VALOR</th>
+                                <th scope="col">AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="orders-panel-bottom">
+                    <span id="ordersPaginationInfo">Nenhum pedido exibido</span>
+                    <span>Histórico de vendas</span>
+                </div>
+
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 CommerceHub</span>
+                <span>Gestão simplificada para seu negócio</span>
+            </footer>
+
+        </main>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- DETALHES DO PEDIDO -->
+<div class="order-modal-backdrop" id="orderDetailsModal" hidden>
+    <section class="order-modal" role="dialog" aria-modal="true"
+             aria-labelledby="orderModalTitle">
+
+        <div class="order-modal-header">
+            <div>
+                <span class="panel-eyebrow">DETALHES DA COMPRA</span>
+                <h2 id="orderModalTitle">Pedido #—</h2>
+            </div>
+
+            <button type="button" class="order-modal-close"
+                    id="closeOrderDetails" aria-label="Fechar detalhes">×</button>
+        </div>
+
+        <div class="order-detail-summary">
+            <div>
+                <span class="order-detail-label">Valor total</span>
+                <strong id="orderDetailTotal">—</strong>
+            </div>
+            <span id="orderDetailStatus" class="order-status status-unknown">
+                Não informado
+            </span>
+        </div>
+
+        <div class="order-detail-grid">
+            <div>
+                <span class="order-detail-label">Cliente</span>
+                <strong id="orderDetailClient">—</strong>
+            </div>
+            <div>
+                <span class="order-detail-label">Data do pedido</span>
+                <strong id="orderDetailDate">—</strong>
+            </div>
+            <div>
+                <span class="order-detail-label">E-mail</span>
+                <strong id="orderDetailEmail">—</strong>
+            </div>
+            <div>
+                <span class="order-detail-label">Pagamento</span>
+                <strong id="orderDetailPayment">—</strong>
+            </div>
+        </div>
+
+        <div class="order-items-section">
+            <h3>Itens do pedido</h3>
+            <div class="order-items-list" id="orderItemsList"></div>
+        </div>
+
+        <div class="order-detail-footer">
+            <span>Total da compra</span>
+            <strong id="orderDetailFooterTotal">—</strong>
+        </div>
+
+        <button type="button" class="order-primary-btn" id="doneOrderDetails">
+            Fechar detalhes
+        </button>
+
+    </section>
+</div>
+
+</body>
+</html>

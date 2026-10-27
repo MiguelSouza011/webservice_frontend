@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CommerceHub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <script src="js/main.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+</head>
+<body>
+
+<div class="app">
+    <aside class="sidebar" id="sidebar">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">C</span>
+            <span>Commerce<span>Hub</span></span>
+        </a>
+
+        <div class="sidebar-section">
+            <p class="menu-label">MENU PRINCIPAL</p>
+
+            <nav class="nav-menu" aria-label="Navegação principal">
+                <a href="index.html" class="nav-link active" aria-current="page">
+                    <span class="nav-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="pages/users.html" class="nav-link">
+                    <span class="nav-icon">♙</span>
+                    <span>Usuários</span>
+                </a>
+
+                <a href="pages/products.html" class="nav-link">
+                    <span class="nav-icon">◈</span>
+                    <span>Produtos</span>
+                </a>
+
+                <a href="pages/orders.html" class="nav-link">
+                    <span class="nav-icon">▤</span>
+                    <span>Pedidos</span>
+                </a>
+
+                <a href="pages/categories.html" class="nav-link">
+                    <span class="nav-icon">▧</span>
+                    <span>Categorias</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="project-icon">C</div>
+            <div>
+                <strong>CommerceHub</strong>
+                <small>Painel de gestão</small>
+            </div>
+        </div>
+    </aside>
+
+    <div class="page-wrapper">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Abrir menu"
+                    aria-expanded="false"
+                    aria-controls="sidebar"
+                >☰</button>
+
+                <span class="breadcrumb">
+                    Gestão <span>/</span> Dashboard
+                </span>
+            </div>
+
+            <div class="topbar-right">
+                <span class="environment-label">Painel administrativo</span>
+                <div class="avatar">AD</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <section class="dashboard-welcome">
+                <div>
+                    <span class="eyebrow">VISÃO GERAL DO NEGÓCIO</span>
+                    <h1>Visão geral <span>✦</span></h1>
+                    <p>
+                        Acompanhe seus indicadores, monitore os pedidos
+                        e tenha uma visão completa do seu negócio.
+                    </p>
+                </div>
+
+                <button type="button" id="refreshDashboard" class="dashboard-refresh">
+                    <span aria-hidden="true">↻</span>
+                    Atualizar dados
+                </button>
+            </section>
+
+            <p class="dashboard-notice" id="dashboardNotice" role="status" aria-live="polite" hidden></p>
+
+            <!-- INDICADORES PRINCIPAIS -->
+            <section class="dashboard-stats" aria-label="Indicadores principais">
+
+                <article class="dashboard-stat-card">
+                    <div class="dashboard-stat-header">
+                        <span>Total de pedidos</span>
+                        <div class="dashboard-stat-icon violet">▤</div>
+                    </div>
+
+                    <strong id="dashboardTotalOrders">—</strong>
+                    <p>Pedidos registrados</p>
+                    <a href="pages/orders.html">Ver pedidos <span>→</span></a>
+                </article>
+
+                <article class="dashboard-stat-card">
+                    <div class="dashboard-stat-header">
+                        <span>Valor dos pedidos</span>
+                        <div class="dashboard-stat-icon emerald">R$</div>
+                    </div>
+
+                    <strong id="dashboardTotalValue" class="dashboard-currency">—</strong>
+                    <p>Valor total registrado</p>
+                    <a href="pages/orders.html">Ver movimentações <span>→</span></a>
+                </article>
+
+                <article class="dashboard-stat-card">
+                    <div class="dashboard-stat-header">
+                        <span>Produtos</span>
+                        <div class="dashboard-stat-icon azure">◈</div>
+                    </div>
+
+                    <strong id="dashboardTotalProducts">—</strong>
+                    <p>Itens no catálogo</p>
+                    <a href="pages/products.html">Ver catálogo <span>→</span></a>
+                </article>
+
+                <article class="dashboard-stat-card">
+                    <div class="dashboard-stat-header">
+                        <span>Clientes</span>
+                        <div class="dashboard-stat-icon amber">♙</div>
+                    </div>
+
+                    <strong id="dashboardTotalUsers">—</strong>
+                    <p>Usuários cadastrados</p>
+                    <a href="pages/users.html">Ver usuários <span>→</span></a>
+                </article>
+
+            </section>
+
+            <!-- GRÁFICOS -->
+            <section class="dashboard-analytics">
+
+                <article class="dashboard-panel">
+                    <div class="dashboard-panel-heading">
+                        <div>
+                            <span class="dashboard-overline">DESEMPENHO</span>
+                            <h2>Pedidos por mês</h2>
+                            <p>Quantidade de pedidos nos últimos 6 meses</p>
+                        </div>
+                        <span class="dashboard-panel-tag">Últimos 6 meses</span>
+                    </div>
+
+                    <div id="ordersChart" class="dashboard-bar-chart" aria-label="Gráfico de pedidos por mês">
+                        <p class="dashboard-empty">Carregando gráfico...</p>
+                    </div>
+                </article>
+
+                <article class="dashboard-panel">
+                    <div class="dashboard-panel-heading">
+                        <div>
+                            <span class="dashboard-overline">ACOMPANHAMENTO</span>
+                            <h2>Status dos pedidos</h2>
+                            <p>Distribuição dos pedidos cadastrados</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-donut-layout">
+                        <div class="dashboard-donut" id="ordersDonut">
+                            <div class="dashboard-donut-center">
+                                <strong id="donutTotal">—</strong>
+                                <span>pedidos</span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-legend" id="ordersLegend">
+                            <p class="dashboard-empty">Carregando status...</p>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+
+            <!-- PEDIDOS RECENTES -->
+            <section class="dashboard-panel dashboard-recent">
+                <div class="dashboard-panel-heading">
+                    <div>
+                        <span class="dashboard-overline">ATIVIDADE RECENTE</span>
+                        <h2>Últimos pedidos</h2>
+                        <p>Acompanhe as compras mais recentes</p>
+                    </div>
+
+                    <a href="pages/orders.html" class="dashboard-view-all">
+                        Ver todos <span>→</span>
+                    </a>
+                </div>
+
+                <div class="dashboard-table-wrap">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>PEDIDO</th>
+                                <th>CLIENTE</th>
+                                <th>DATA</th>
+                                <th>STATUS</th>
+                                <th>VALOR</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentOrdersBody">
+                            <tr>
+                                <td colspan="5" class="dashboard-empty-cell">
+                                    Carregando pedidos...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- RESUMO DO CATÁLOGO -->
+            <section class="dashboard-bottom">
+                <article class="dashboard-panel dashboard-catalog-panel">
+                    <div class="dashboard-panel-heading">
+                        <div>
+                            <span class="dashboard-overline">CATÁLOGO</span>
+                            <h2>Resumo de produtos</h2>
+                            <p>Organização do seu catálogo</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-catalog-stats">
+                        <div>
+                            <span>Produtos cadastrados</span>
+                            <strong id="catalogProducts">—</strong>
+                        </div>
+                        <div>
+                            <span>Categorias disponíveis</span>
+                            <strong id="catalogCategories">—</strong>
+                        </div>
+                    </div>
+
+                    <a href="pages/categories.html" class="dashboard-secondary-link">
+                        Explorar categorias <span>→</span>
+                    </a>
+                </article>
+
+                <article class="dashboard-highlight">
+                    <div class="dashboard-highlight-icon">✦</div>
+                    <span>ACESSO RÁPIDO</span>
+                    <h2>Seu negócio em um só lugar.</h2>
+                    <p>
+                        Explore o catálogo, acompanhe as compras e
+                        mantenha as informações organizadas.
+                    </p>
+                    <a href="pages/products.html">
+                        Explorar produtos <span>→</span>
+                    </a>
+                </article>
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 CommerceHub</span>
+                <span>Gestão simplificada para seu negócio</span>
+            </footer>
+
+        </main>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+</body>
+</html>
